@@ -19,7 +19,7 @@ app:
     url: "jdbc:mysql://mysql-test:3306/akwalibnalkayemms_test?useSSL=false&allowPublicKeyRetrieval=true"
   logging:
     level:
-      com.renault.akwalibnalkayemms: "INFO"
+      tech.amineabbaoui.akwalibnalkayemms: "INFO"
 
 ingress:
   enabled: true

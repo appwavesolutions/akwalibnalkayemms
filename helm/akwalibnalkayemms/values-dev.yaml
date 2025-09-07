@@ -19,7 +19,7 @@ app:
     url: "jdbc:mysql://mysql-dev:3306/akwalibnalkayemms_dev?useSSL=false&allowPublicKeyRetrieval=true"
   logging:
     level:
-      com.renault.akwalibnalkayemms: "DEBUG"
+      tech.amineabbaoui.akwalibnalkayemms: "DEBUG"
 
 ingress:
   enabled: true

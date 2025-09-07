@@ -82,7 +82,7 @@ app:
   logging:
     level:
       root: "INFO"
-      com.renault.akwalibnalkayemms: "DEBUG"
+      tech.amineabbaoui.akwalibnalkayemms: "DEBUG"
 
 # Environment specific overrides
 environments:
@@ -100,7 +100,7 @@ environments:
         active: "dev"
       logging:
         level:
-          com.renault.akwalibnalkayemms: "DEBUG"
+          tech.amineabbaoui.akwalibnalkayemms: "DEBUG"
   
   test:
     replicaCount: 2
@@ -109,7 +109,7 @@ environments:
         active: "test"
       logging:
         level:
-          com.renault.akwalibnalkayemms: "INFO"
+          tech.amineabbaoui.akwalibnalkayemms: "INFO"
   
   prod:
     replicaCount: 3

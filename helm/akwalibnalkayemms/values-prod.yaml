@@ -19,7 +19,7 @@ app:
     url: "jdbc:mysql://mysql-prod:3306/akwalibnalkayemms_prod?useSSL=true&allowPublicKeyRetrieval=false"
   logging:
     level:
-      com.renault.akwalibnalkayemms: "WARN"
+      tech.amineabbaoui.akwalibnalkayemms: "WARN"
 
 ingress:
   enabled: true

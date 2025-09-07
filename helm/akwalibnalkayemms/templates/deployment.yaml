@@ -52,8 +52,8 @@ spec:
               value: {{ .Values.app.security.password | quote }}
             - name: LOGGING_LEVEL_ROOT
               value: {{ .Values.app.logging.level.root | quote }}
-            - name: LOGGING_LEVEL_COM_RENAULT_AKWALIBNALKA YEMMS
-              value: {{ .Values.app.logging.level.com.renault.akwalibnalkayemms | quote }}
+            - name: LOGGING_LEVEL_TECH_AMINEABBAOUI_AKWALIBNALKA YEMMS
+              value: {{ .Values.app.logging.level.tech.amineabbaoui.akwalibnalkayemms | quote }}
           livenessProbe:
             httpGet:
               path: /actuator/health

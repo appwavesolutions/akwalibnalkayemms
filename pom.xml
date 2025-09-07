@@ -8,7 +8,7 @@
 		<version>3.2.1</version>
 		<relativePath/>
 	</parent>
-	<groupId>com.renault.akwalibnalkayemms</groupId>
+	<groupId>tech.amineabbaoui.akwalibnalkayemms</groupId>
 	<artifactId>akwalibnalkayemms</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>akwalibnalkayemms</name>

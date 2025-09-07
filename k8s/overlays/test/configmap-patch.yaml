@@ -5,5 +5,5 @@ metadata:
 data:
   spring.profiles.active: "test"
   spring.datasource.url: "jdbc:mysql://mysql-test:3306/akwalibnalkayemms_test?useSSL=false&allowPublicKeyRetrieval=true"
-  logging.level.com.renault.akwalibnalkayemms: "INFO"
+  logging.level.tech.amineabbaoui.akwalibnalkayemms: "INFO"
   management.endpoints.web.exposure.include: "health,info,metrics"

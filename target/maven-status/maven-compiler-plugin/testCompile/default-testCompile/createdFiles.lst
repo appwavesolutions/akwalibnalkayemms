@@ -1,7 +1,0 @@
-com/renault/garage/controller/GarageControllerIntegrationTest.class
-com/renault/garage/KafkaTestConfig.class
-com/renault/garage/exception/GlobalExceptionHandlerTest.class
-com/renault/garage/VehicleServiceTest.class
-com/renault/garage/VehicleEventIntegrationTest.class
-com/renault/garage/controller/VehicleControllerIntegrationTest.class
-com/renault/garage/controller/VehicleAccessoryControllerIntegrationTest.class

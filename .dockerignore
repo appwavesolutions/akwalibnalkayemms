@@ -1,5 +1,5 @@
 # Maven
-target/
+# target/ - Commented out to allow JAR file copying
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup

@@ -1,4 +1,4 @@
-version: '3.8'
+# Docker Compose file for Akwalibnalkayemms
 
 services:
   mysql:
@@ -10,7 +10,7 @@ services:
       MYSQL_USER: appuser
       MYSQL_PASSWORD: apppass
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
       - ./sql:/docker-entrypoint-initdb.d

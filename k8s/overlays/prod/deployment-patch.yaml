@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: akwalibnalkayemms
 spec:
+  replicas: 3
   template:
     spec:
       containers:
@@ -15,8 +16,31 @@ spec:
             memory: "1Gi"
             cpu: "600m"
         env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "prod"
         - name: SPRING_DATASOURCE_URL
-          valueFrom:
-            configMapKeyRef:
-              name: akwalibnalkayemms-config
-              key: spring.datasource.url
+          value: "jdbc:mysql://mysql:3306/akwalibnalkayemms?useSSL=true&allowPublicKeyRetrieval=false"
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 9090
+          initialDelaySeconds: 90
+          periodSeconds: 30
+          timeoutSeconds: 10
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: 9090
+          initialDelaySeconds: 60
+          periodSeconds: 15
+          timeoutSeconds: 10
+          failureThreshold: 3
+        startupProbe:
+          httpGet:
+            path: /actuator/health
+            port: 9090
+          initialDelaySeconds: 30
+          periodSeconds: 15
+          timeoutSeconds: 10
+          failureThreshold: 30

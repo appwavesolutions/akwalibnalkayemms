@@ -5,9 +5,13 @@ set -e
 
 # Configuration
 IMAGE_NAME="akwalibnalkayemms"
-REGISTRY="your-registry.com"  # Replace with your registry
+REGISTRY="147.79.100.189:5000"  # Replace with your registry (e.g., docker.io/yourusername, gcr.io/project-id, etc.)
 VERSION=${1:-latest}
 ENVIRONMENT=${2:-dev}
+
+# Registry authentication (uncomment and configure as needed)
+# echo "Logging into registry..."
+# docker login $REGISTRY
 
 # Colors for output
 RED='\033[0;31m'

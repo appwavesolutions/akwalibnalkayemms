@@ -1,0 +1,17 @@
+apiVersion: v2
+name: akwalibnalkayemms
+description: Islamic Knowledge Management Microservice
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+keywords:
+  - islamic
+  - knowledge
+  - microservice
+  - spring-boot
+home: https://github.com/your-username/akwalibnalkayemms
+sources:
+  - https://github.com/your-username/akwalibnalkayemms
+maintainers:
+  - name: Your Name
+    email: your.email@example.com

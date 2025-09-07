@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: akwalibnalkayemms-prod
+
+resources:
+- ../../base
+
+patchesStrategicMerge:
+- deployment-patch.yaml
+- configmap-patch.yaml
+- ingress-patch.yaml
+
+images:
+- name: akwalibnalkayemms
+  newTag: prod
+
+replicas:
+- name: akwalibnalkayemms
+  count: 3

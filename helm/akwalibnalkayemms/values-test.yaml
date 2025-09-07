@@ -1,0 +1,30 @@
+# Test environment values
+replicaCount: 2
+
+image:
+  tag: "test"
+
+resources:
+  limits:
+    cpu: 400m
+    memory: 512Mi
+  requests:
+    cpu: 200m
+    memory: 256Mi
+
+app:
+  profiles:
+    active: "test"
+  database:
+    url: "jdbc:mysql://mysql-test:3306/akwalibnalkayemms_test?useSSL=false&allowPublicKeyRetrieval=true"
+  logging:
+    level:
+      com.renault.akwalibnalkayemms: "INFO"
+
+ingress:
+  enabled: true
+  hosts:
+    - host: akwalibnalkayemms-test.local
+      paths:
+        - path: /
+          pathType: Prefix

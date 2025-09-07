@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: akwalibnalkayemms
+spec:
+  template:
+    spec:
+      containers:
+      - name: akwalibnalkayemms
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "300m"
+          limits:
+            memory: "1Gi"
+            cpu: "600m"
+        env:
+        - name: SPRING_DATASOURCE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: akwalibnalkayemms-config
+              key: spring.datasource.url

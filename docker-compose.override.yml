@@ -1,0 +1,12 @@
+# Development overrides
+version: '3.8'
+
+services:
+  app:
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      LOGGING_LEVEL_COM_RENAULT_AKWALIBNALKA YEMMS: DEBUG
+      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: "health,info,metrics,env,configprops"
+    volumes:
+      - ./src:/app/src
+    command: ["mvn", "spring-boot:run", "-Dspring-boot.run.profiles=dev"]

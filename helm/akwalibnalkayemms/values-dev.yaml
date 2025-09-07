@@ -1,0 +1,30 @@
+# Development environment values
+replicaCount: 1
+
+image:
+  tag: "dev"
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+app:
+  profiles:
+    active: "dev"
+  database:
+    url: "jdbc:mysql://mysql-dev:3306/akwalibnalkayemms_dev?useSSL=false&allowPublicKeyRetrieval=true"
+  logging:
+    level:
+      com.renault.akwalibnalkayemms: "DEBUG"
+
+ingress:
+  enabled: true
+  hosts:
+    - host: akwalibnalkayemms-dev.local
+      paths:
+        - path: /
+          pathType: Prefix

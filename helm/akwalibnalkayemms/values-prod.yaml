@@ -1,0 +1,47 @@
+# Production environment values
+replicaCount: 3
+
+image:
+  tag: "prod"
+
+resources:
+  limits:
+    cpu: 600m
+    memory: 1Gi
+  requests:
+    cpu: 300m
+    memory: 512Mi
+
+app:
+  profiles:
+    active: "prod"
+  database:
+    url: "jdbc:mysql://mysql-prod:3306/akwalibnalkayemms_prod?useSSL=true&allowPublicKeyRetrieval=false"
+  logging:
+    level:
+      com.renault.akwalibnalkayemms: "WARN"
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/rate-limit: "100"
+    nginx.ingress.kubernetes.io/rate-limit-window: "1m"
+  hosts:
+    - host: akwalibnalkayemms.yourdomain.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: akwalibnalkayemms-tls
+      hosts:
+        - akwalibnalkayemms.yourdomain.com
+
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 80

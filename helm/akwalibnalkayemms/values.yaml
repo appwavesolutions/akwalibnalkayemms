@@ -1,0 +1,128 @@
+# Default values for akwalibnalkayemms
+replicaCount: 2
+
+image:
+  repository: akwalibnalkayemms
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext:
+  fsGroup: 2000
+
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 9090
+  nodePort: 30090
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+  hosts:
+    - host: akwalibnalkayemms.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# Application configuration
+app:
+  profiles:
+    active: "prod"
+  database:
+    url: "jdbc:mysql://mysql:3306/akwalibnalkayemms?useSSL=false&allowPublicKeyRetrieval=true"
+    username: "root"
+    password: "admin123"
+  security:
+    username: "admin"
+    password: "secret123"
+  logging:
+    level:
+      root: "INFO"
+      com.renault.akwalibnalkayemms: "DEBUG"
+
+# Environment specific overrides
+environments:
+  dev:
+    replicaCount: 1
+    resources:
+      limits:
+        cpu: 200m
+        memory: 256Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    app:
+      profiles:
+        active: "dev"
+      logging:
+        level:
+          com.renault.akwalibnalkayemms: "DEBUG"
+  
+  test:
+    replicaCount: 2
+    app:
+      profiles:
+        active: "test"
+      logging:
+        level:
+          com.renault.akwalibnalkayemms: "INFO"
+  
+  prod:
+    replicaCount: 3
+    resources:
+      limits:
+        cpu: 600m
+        memory: 1Gi
+      requests:
+        cpu: 300m
+        memory: 512Mi
+    app:
+      profiles:
+        active: "prod"
+      logging:
+        level:
+          com.renault.akwalibnalkayemms: "WARN"

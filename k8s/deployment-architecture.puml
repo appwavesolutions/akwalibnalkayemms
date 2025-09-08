@@ -1,0 +1,180 @@
+@startuml Java API Kubernetes Deployment Architecture
+
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam componentStyle rectangle
+
+title Java API Kubernetes Deployment Architecture
+
+' Define colors
+skinparam component {
+    BackgroundColor #E1F5FE
+    BorderColor #0277BD
+    FontColor #000000
+}
+
+skinparam database {
+    BackgroundColor #F3E5F5
+    BorderColor #7B1FA2
+    FontColor #000000
+}
+
+skinparam cloud {
+    BackgroundColor #E8F5E8
+    BorderColor #388E3C
+    FontColor #000000
+}
+
+' Git Repository
+cloud "Git Repository" as Git {
+    component "Source Code" as SourceCode
+    component "pom.xml" as PomXml
+    component "Dockerfile" as Dockerfile
+    component "k8s/ manifests" as K8sManifests
+    component "scripts/" as Scripts
+}
+
+' Jenkins CI/CD
+rectangle "Jenkins CI/CD Pipeline" as Jenkins {
+    component "1. Checkout" as Checkout
+    component "2. Maven Build" as MavenBuild
+    component "3. Unit Tests" as UnitTests
+    component "4. Docker Build" as DockerBuild
+    component "5. Push to Registry" as PushRegistry
+    component "6. Deploy to K8s" as DeployK8s
+    component "7. Health Check" as HealthCheck
+}
+
+' Docker Registry
+cloud "Docker Registry" as Registry {
+    component "Image Storage" as ImageStorage
+    component "Image Tags" as ImageTags
+    note right of ImageStorage
+        - localhost:5000 (Local)
+        - Docker Hub (Production)
+        - AWS ECR (Production)
+    end note
+}
+
+' Kubernetes Cluster
+rectangle "Kubernetes Cluster" as K8sCluster {
+    ' Namespaces
+    rectangle "Development Namespace" as DevNS {
+        component "App Pod" as DevApp
+        component "MySQL Pod" as DevMySQL
+        component "ConfigMap" as DevConfigMap
+        component "Secret" as DevSecret
+        component "Service" as DevService
+    }
+    
+    rectangle "Production Namespace" as ProdNS {
+        component "App Pods (3x)" as ProdApp
+        component "MySQL Pod" as ProdMySQL
+        component "ConfigMap" as ProdConfigMap
+        component "Secret" as ProdSecret
+        component "Service" as ProdService
+        component "Ingress" as ProdIngress
+    }
+}
+
+' External Access
+cloud "External Access" as External {
+    component "Load Balancer" as LoadBalancer
+    component "Ingress Controller" as IngressController
+    component "SSL/TLS" as SSL
+}
+
+' Database
+database "Persistent Storage" as Storage {
+    component "MySQL Data" as MySQLData
+    component "PVC" as PVC
+}
+
+' File System
+rectangle "File System" as FileSystem {
+    component "target/akwalibnalkayemms-*.jar" as JARFile
+    component "Docker Image" as DockerImage
+}
+
+' Connections
+Git --> Jenkins : "Code Push Trigger"
+SourceCode --> Checkout
+PomXml --> MavenBuild
+Dockerfile --> DockerBuild
+K8sManifests --> DeployK8s
+Scripts --> DeployK8s
+
+Checkout --> MavenBuild : "Checkout Code"
+MavenBuild --> UnitTests : "Build JAR"
+UnitTests --> DockerBuild : "Run Tests"
+DockerBuild --> PushRegistry : "Build Image"
+PushRegistry --> DeployK8s : "Push Image"
+DeployK8s --> HealthCheck : "Deploy to K8s"
+
+Jenkins --> Registry : "Push Image"
+Registry --> K8sCluster : "Pull Image"
+
+' Kubernetes internal connections
+DevApp --> DevMySQL : "Database Connection"
+DevApp --> DevConfigMap : "Configuration"
+DevApp --> DevSecret : "Credentials"
+DevService --> DevApp : "Load Balance"
+
+ProdApp --> ProdMySQL : "Database Connection"
+ProdApp --> ProdConfigMap : "Configuration"
+ProdApp --> ProdSecret : "Credentials"
+ProdService --> ProdApp : "Load Balance"
+ProdIngress --> ProdService : "External Access"
+
+' Storage connections
+DevMySQL --> Storage : "Persistent Data"
+ProdMySQL --> Storage : "Persistent Data"
+Storage --> PVC : "Volume Mount"
+
+' External access
+External --> ProdIngress : "HTTPS Traffic"
+LoadBalancer --> IngressController : "Route Traffic"
+IngressController --> ProdIngress : "Process Rules"
+SSL --> IngressController : "TLS Termination"
+
+' File system connections
+MavenBuild --> FileSystem : "Generate JAR"
+DockerBuild --> FileSystem : "Create Image"
+FileSystem --> Registry : "Push Image"
+
+' Notes and annotations
+note top of Jenkins
+    **Jenkins Pipeline Stages:**
+    1. Checkout from Git
+    2. Maven build with tests
+    3. Docker image creation
+    4. Push to registry
+    5. Deploy to Kubernetes
+    6. Health verification
+end note
+
+note right of Registry
+    **Registry Types:**
+    - Local: localhost:5000
+    - Production: Docker Hub/ECR
+    - Authentication: regcred secret
+end note
+
+note bottom of K8sCluster
+    **Kubernetes Resources:**
+    - Deployment: App pods
+    - Service: Load balancing
+    - ConfigMap: Configuration
+    - Secret: Credentials
+    - Ingress: External access
+    - PVC: Persistent storage
+end note
+
+note left of Storage
+    **Storage:**
+    - MySQL data persistence
+    - 10Gi PVC per environment
+    - ReadWriteOnce access mode
+end note
+
+@enduml
